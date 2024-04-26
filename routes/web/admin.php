@@ -10,7 +10,11 @@ Route::get('admin/dashboard', [AdminController::class, 'dashboard'])
 ->name('admin.dashboard');
 
 /** Rota admin ver perfil  */
-Route::get('admin/profile', [ProfileController::class, 'index'])->name('admin.profile');
+Route::get('admin/profile', [ProfileController::class, 'index'])
+->middleware(['auth', 'admin'])
+->name('admin.profile');
 
 /** Rota admin para atualizar o perfil   */
-Route::post('admin/profile/update', [ProfileController::class, 'update'])->name('admin.profile.update');
+Route::post('admin/profile/update', [ProfileController::class, 'update'])
+->middleware(['auth', 'admin'])
+->name('admin.profile.update');

@@ -132,7 +132,12 @@
         </div>
       </li>
       <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-        <img alt="image" src="{{ asset('backend/assets/img/avatar/avatar-1.png') }}" class="rounded-circle mr-1">
+        @if(Auth::user()->image != null)
+        <img src="{{ asset(Auth::user()->image) }}" class="rounded-circle mr-1" alt="{{ Auth::user()->name }}">
+        @else
+        <img  src="{{ asset('backend/assets/img/avatar/avatar-1.png') }}" class="rounded-circle mr-1" alt="{{ Auth::user()->name }}">
+        @endif
+
         <div class="d-sm-none d-lg-inline-block">{{ Auth::user()->name }}</div></a>
         <div class="dropdown-menu dropdown-menu-right">
           <div class="dropdown-title">Logged in 5 min ago</div>
