@@ -136,7 +136,7 @@
         <div class="d-sm-none d-lg-inline-block">{{ Auth::user()->name }}</div></a>
         <div class="dropdown-menu dropdown-menu-right">
           <div class="dropdown-title">Logged in 5 min ago</div>
-          <a href="{{ route('profile.edit') }}" class="dropdown-item has-icon">
+          <a href="{{ route('admin.profile') }}" class="dropdown-item has-icon">
             <i class="far fa-user"></i> Perfil
           </a>
           <a href="features-activities.html" class="dropdown-item has-icon">
