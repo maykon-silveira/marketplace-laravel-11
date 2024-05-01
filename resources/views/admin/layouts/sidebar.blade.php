@@ -12,7 +12,7 @@
           <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Painel</span></a>
           <ul class="dropdown-menu">
             <li class=active><a class="nav-link" href="index-0.html">Configurações</a></li>
-            <li><a class="nav-link" href="index.html">Ecommerce Dashboard</a></li>
+            <li><a class="nav-link" href="{{ route('slider.index') }}">Slide Destaque</a></li>
           </ul>
         </li>
         <li class="menu-header">Starter</li>
