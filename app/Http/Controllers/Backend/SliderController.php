@@ -4,10 +4,15 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Slider;
+use App\Traits\UploadImageTrait;
 use Illuminate\Http\Request;
 
 class SliderController extends Controller
 {
+
+    //envio de imagem msflix Maykon Silveira
+    use UploadImageTrait;
+
     /**
      * Display a listing of the resource.
      */
@@ -31,7 +36,7 @@ class SliderController extends Controller
     {
         //dd($request->all());
         $request->validate([
-         //'banner' => ['required', 'image', 'max:2048'],
+         'banner' => ['required', 'image', 'max:2048'],
          'title_one' => ['string', 'max:200'],
          'title_two' => ['required', 'max:200'],
          'starting_price' => ['max:200'],
@@ -42,6 +47,9 @@ class SliderController extends Controller
 
         $slider = new Slider();
 
+        $imagePath = $this->uploadImage($request, 'banner', 'uploads');
+
+        $slider->banner = $imagePath;
         $slider->title_one = $request->title_one;
         $slider->title_two = $request->title_two;
         $slider->starting_price = $request->starting_price;
