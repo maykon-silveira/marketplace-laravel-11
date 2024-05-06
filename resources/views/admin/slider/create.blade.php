@@ -36,7 +36,7 @@
 
                   <div class="form-group">
                     <label for="">Titulo 1</label>
-                    <input type="text" name="title_one" class="form-control" placeholder="Adicione o titulo" value="{{old('title_one')}}">
+                    <input type="text" name="titulo" class="form-control" placeholder="Adicione o titulo" value="{{old('titulo')}}">
                   </div>
 
                   <div class="form-group">
