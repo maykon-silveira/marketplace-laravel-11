@@ -34,7 +34,7 @@
                   <div class="form-group">
                     <label for="">Capa</label>
                     <br>
-                    <img src="{{ asset($slider->banner) }}" alt="{{ $slider->titulo }}" style="width:30%; height:auto;">
+                    <img src="{{ asset($slider->banner) }}" alt="{{ $slider->titulo }}" class="img-fluid" style="width:30%; height:auto;">
                   </div>
 
                   <div class="form-group">

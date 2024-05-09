@@ -89,7 +89,33 @@ class SliderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        //dd($request->all());
+        $request->validate([
+            'banner' => ['nullable', 'image', 'max:2048'],
+            'titulo' => ['string', 'max:200'],
+            'title_two' => ['required', 'max:200'],
+            'starting_price' => ['max:200'],
+            'link' => ['url'],
+            'serial' => ['required', 'integer'],
+            'status' => ['required'],
+           ]);
+
+           $slider = Slider::findOrFail($id);
+
+           $imagePath = $this->updateImage($request, 'banner', 'uploads', $slider->banner);
+
+           $slider->banner = $imagePath;
+           $slider->titulo = $request->titulo;
+           $slider->title_two = $request->title_two;
+           $slider->starting_price = $request->starting_price;
+           $slider->link = $request->link;
+           $slider->serial = $request->serial;
+           $slider->status = $request->status;
+           $slider->save();
+
+           toastr('Atualizado com sucesso!', 'success');
+           return redirect()->route('slider.index');
+
     }
 
     /**
