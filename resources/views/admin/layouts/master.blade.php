@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Painel Admisnistrativo  &mdash; MaykonSilveira.com.br</title>
 
   <!-- General CSS Files -->
@@ -91,9 +92,12 @@
  <script src="//cdn.datatables.net/2.0.6/js/dataTables.min.js"></script>
  <script src="https://cdn.datatables.net/2.0.6/js/dataTables.bootstrap5.js"></script>
 
+  <!-- JS SWEET -->
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- JS Toastr -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 
   <!-- Page Specific JS File -->
   <script src="{{ asset('backend/assets/js/page/index-0.js') }}"></script>
@@ -102,13 +106,74 @@
   <script src="{{ asset('backend/assets/js/scripts.js') }}"></script>
   <script src="{{ asset('backend/assets/js/custom.js') }}"></script>
 
+
+
 <script>
 @if ($errors->any())
 @foreach ($errors->all() as $error)
 toastr.error("{{$error}}");
 @endforeach
 @endif
-  </script>
+ </script>
+
+<script>
+$(document).ready(function(){
+
+$.ajaxSetup({
+headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+}
+});
+
+$('body').on('click', '.delete-item', function(event){
+event.preventDefault();
+
+let deleteUrl = $(this).attr('href');
+
+Swal.fire({
+  title: "Tem certeza?",
+  text: "Você não poderá reverter isso!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#1e5e2f",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Sim, exclua-o!"
+}).then((result) => {
+  if (result.isConfirmed) {
+
+    $.ajax({
+        type: 'DELETE',
+        url: deleteUrl,
+
+        success: function(data){
+
+            if(data.status == 'success'){
+
+                Swal.fire({
+                title: "Excluído!",
+                text: "Seu arquivo foi excluído com sucesso!",
+                icon: "success"
+                });
+
+                window.location.reload();
+            }
+
+        },
+        error: function(xhr, status, error){
+          console.log(error);
+        }
+
+    })
+
+
+  }
+});
+
+})
+
+
+});
+</script>
 
 @stack('scripts')
 </body>

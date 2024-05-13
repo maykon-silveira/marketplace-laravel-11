@@ -104,7 +104,7 @@ class SliderController extends Controller
 
            $imagePath = $this->updateImage($request, 'banner', 'uploads', $slider->banner);
 
-           $slider->banner = $imagePath;
+           $slider->banner = empty(!$imagePath) ? $imagePath : $slider->banner;
            $slider->titulo = $request->titulo;
            $slider->title_two = $request->title_two;
            $slider->starting_price = $request->starting_price;
@@ -123,6 +123,10 @@ class SliderController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+       $slider = Slider::findOrFail($id);
+       $this->deleteImage($slider->banner);
+       $slider->delete();
+
+       return response(['status' => 'success', 'message' => 'Excluído com sucesso!']);
     }
 }
