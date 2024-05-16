@@ -64,7 +64,7 @@
 
                   <div class="form-group">
                     <label for="">Ordem</label>
-                    <input type="number" name="serial" class="form-control" placeholder="Adicione a ordem de exibição" value="{{ old('serial') }}">
+                    <input type="number" name="ordem" class="form-control" placeholder="Adicione a ordem de exibição" value="{{ old('ordem') }}">
                   </div>
 
                   <button type="submit" class="btn btn-primary">Salvar</button>

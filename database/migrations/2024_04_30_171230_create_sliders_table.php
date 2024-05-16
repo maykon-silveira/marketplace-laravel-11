@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title_two')->nullable();
             $table->string('starting_price')->nullable();
             $table->string('link')->nullable();
-            $table->integer('serial')->nullable();
+            $table->integer('ordem')->nullable();
             $table->boolean('status')->nullable();
             $table->timestamps();
         });

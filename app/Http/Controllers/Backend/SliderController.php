@@ -44,7 +44,7 @@ class SliderController extends Controller
          'title_two' => ['required', 'max:200'],
          'starting_price' => ['max:200'],
          'link' => ['url'],
-         'serial' => ['required', 'integer'],
+         'ordem' => ['required', 'integer'],
          'status' => ['required'],
         ]);
 
@@ -57,7 +57,7 @@ class SliderController extends Controller
         $slider->title_two = $request->title_two;
         $slider->starting_price = $request->starting_price;
         $slider->link = $request->link;
-        $slider->serial = $request->serial;
+        $slider->ordem = $request->ordem;
         $slider->status = $request->status;
         $slider->save();
 
@@ -96,7 +96,7 @@ class SliderController extends Controller
             'title_two' => ['required', 'max:200'],
             'starting_price' => ['max:200'],
             'link' => ['url'],
-            'serial' => ['required', 'integer'],
+            'ordem' => ['required', 'integer'],
             'status' => ['required'],
            ]);
 
@@ -109,7 +109,7 @@ class SliderController extends Controller
            $slider->title_two = $request->title_two;
            $slider->starting_price = $request->starting_price;
            $slider->link = $request->link;
-           $slider->serial = $request->serial;
+           $slider->ordem = $request->ordem;
            $slider->status = $request->status;
            $slider->save();
 
@@ -130,3 +130,6 @@ class SliderController extends Controller
        return response(['status' => 'success', 'message' => 'Excluído com sucesso!']);
     }
 }
+
+
+

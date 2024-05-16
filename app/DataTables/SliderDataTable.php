@@ -27,10 +27,22 @@ class SliderDataTable extends DataTable
             $delete = "<a href='".route('slider.destroy', $query->id)."' class='btn btn-danger delete-item'><i class='far fa-trash-alt'></i></a>";
             return $edit.$delete;
             })
+            ->addColumn('status', function($query){
+                $ativo = '<i class="badge badge-success">Ativo</i>';
+                $cancelado = '<i class="badge badge-danger">Cancelado</i>';
+                if($query->status == 1){
+                  return $ativo;
+                }else{
+                  return $cancelado;
+                }
+            })
+            ->addColumn('ordem', function($query){
+               return $query->ordem;
+            })
             ->addColumn('banner', function($query){
              return $img = "<img src='". asset($query->banner) ."' style='width: 30%; height:auto;'>";
             })
-            ->rawColumns(['banner', 'editar'])
+            ->rawColumns(['banner', 'editar', 'status'])
             ->setRowId('id');
 
     }
@@ -78,6 +90,8 @@ class SliderDataTable extends DataTable
             Column::make('id'),
             Column::make('banner'),
             Column::make('titulo'),
+            Column::make('status'),
+            Column::make('ordem'),
             Column::computed('editar')
             ->exportable(false)
             ->printable(false)
