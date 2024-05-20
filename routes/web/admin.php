@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\CategoriaController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SliderController;
 use Illuminate\Support\Facades\Route;
@@ -27,5 +28,10 @@ Route::post('admin/profile/update/password', [ProfileController::class, 'updateP
 
 /** Rota slider destaque   */
 Route::resource('admin/slider', SliderController::class)
+->middleware(['auth', 'admin']);
+
+
+/** Rota slider destaque   */
+Route::resource('admin/categoria', CategoriaController::class)
 ->middleware(['auth', 'admin']);
 
