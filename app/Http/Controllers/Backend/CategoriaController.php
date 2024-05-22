@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Backend;
 
 use App\DataTables\CategoriaDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\Categoria;
 use Illuminate\Http\Request;
+use Str;
 
 class CategoriaController extends Controller
 {
@@ -29,7 +31,23 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       //dd($request->all());
+       $request->validate([
+        'icone' => ['required', 'not_in:empty'],
+        'nome' => ['required', 'max:200', 'unique:categorias,nome'],
+        'status' => ['required']
+       ]);
+
+       $categoria = new Categoria();
+
+       $categoria->icone = $request->icone;
+       $categoria->nome = $request->nome;
+       $categoria->status = $request->status;
+       $categoria->slug = Str::slug($request->nome);
+       $categoria->save();
+
+       toastr('Cadastrado com sucesso!', 'success');
+       return redirect()->route('categoria.index');
     }
 
     /**
