@@ -28,7 +28,7 @@ class CategoriaDataTable extends DataTable
               return $editar.$excluir;
             })
             ->addColumn('icone', function($query){
-              $icone = "<i class='".$query->icone."'></i>";
+              $icone = "<i class='".$query->icone."' style='font-size:20px;'></i>";
               return $icone;
             })
             ->addColumn('status', function($query){

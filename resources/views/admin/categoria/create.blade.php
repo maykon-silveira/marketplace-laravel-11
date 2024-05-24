@@ -56,7 +56,7 @@
                     <label for="">Status</label>
                     <select name="status" class="form-control">
                         <option value="1">Ativo</option>
-                        <option value="0">Inativo</option>
+                        <option value="0">Cancelado</option>
                     </select>
                   </div>
 
