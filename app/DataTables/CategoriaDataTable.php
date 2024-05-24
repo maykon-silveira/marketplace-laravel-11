@@ -24,7 +24,7 @@ class CategoriaDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('editar', function($query){
               $editar = "<a href='".route('categoria.edit', $query->id)."' class='btn btn-primary mb-2'><i class='far fa-edit'></i></a>";
-              $excluir = "<a href='".route('categoria.destroy', $query->id)."' class='btn btn-danger'><i class='far fa-trash-alt'></i></a>";
+              $excluir = "<a href='".route('categoria.destroy', $query->id)."' class='btn btn-danger delete-item'><i class='far fa-trash-alt'></i></a>";
               return $editar.$excluir;
             })
             ->addColumn('icone', function($query){

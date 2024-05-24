@@ -72,7 +72,24 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        //dd($request->all());
+        $request->validate([
+            'icone' => ['required', 'not_in:empty'],
+            'nome' => ['required', 'max:200', 'unique:categorias,nome,'.$id],
+            'status' => ['required']
+           ]);
+
+        $categoria = Categoria::findOrFail($id);
+
+        $categoria->icone = $request->icone;
+        $categoria->nome = $request->nome;
+        $categoria->status = $request->status;
+        $categoria->slug = Str::slug($request->nome);
+        $categoria->save();
+
+        toastr("Atualizado com sucesso!", "success");
+        return redirect()->route('categoria.index');
+
     }
 
     /**
@@ -80,6 +97,8 @@ class CategoriaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $categoria = Categoria::findOrFail($id);
+        $categoria->delete();
+        return response(['status' => 'success', 'message' => 'Excluído com sucesso!']);
     }
 }

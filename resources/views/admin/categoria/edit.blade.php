@@ -29,6 +29,7 @@
 
                 <form action="{{ route('categoria.update', $categoria->id) }}" method="post" enctype="multipart/form-data">
                  @csrf
+                 @method('PUT')
                   <div class="form-group">
                    <div>
                      <button
