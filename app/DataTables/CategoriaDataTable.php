@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Categorium;
+use App\Models\Categoria;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -22,14 +22,32 @@ class CategoriaDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'categoria.action')
+            ->addColumn('editar', function($query){
+              $editar = "<a href='".route('categoria.edit', $query->id)."' class='btn btn-primary mb-2'><i class='far fa-edit'></i></a>";
+              $excluir = "<a href='".route('categoria.destroy', $query->id)."' class='btn btn-danger'><i class='far fa-trash-alt'></i></a>";
+              return $editar.$excluir;
+            })
+            ->addColumn('icone', function($query){
+              $icone = "<i class='".$query->icone."'></i>";
+              return $icone;
+            })
+            ->addColumn('status', function($query){
+              $ativo = "<i class='badge badge-success'>Ativo</i>";
+              $cancelado = "<i class='badge badge-danger'>Cancelado</i>";
+              if($query->status == 1){
+                return $ativo;
+              }else{
+                return $cancelado;
+              }
+            })
+            ->rawColumns(['icone', 'status', 'editar'])
             ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Categorium $model): QueryBuilder
+    public function query(Categoria $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -40,7 +58,7 @@ class CategoriaDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('categoria-table')
+                    //->setTableId('categoria-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
@@ -65,15 +83,16 @@ class CategoriaDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('action')
+
+            Column::make('id'),
+            Column::make('icone'),
+            Column::make('nome'),
+            Column::make('status'),
+            Column::computed('editar')
                   ->exportable(false)
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
         ];
     }
 
