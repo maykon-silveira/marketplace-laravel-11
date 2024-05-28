@@ -32,13 +32,19 @@ class CategoriaDataTable extends DataTable
               return $icone;
             })
             ->addColumn('status', function($query){
-              $ativo = "<i class='badge badge-success'>Ativo</i>";
-              $cancelado = "<i class='badge badge-danger'>Cancelado</i>";
               if($query->status == 1){
-                return $ativo;
+              $botao = '<label class="custom-switch mt-2">
+              <input type="checkbox" checked name="custom-switch-checkbox" data-id="'.$query->id.'" class="custom-switch-input muda-status">
+              <span class="custom-switch-indicator"></span>
+              </label>';
               }else{
-                return $cancelado;
+              $botao = '<label class="custom-switch mt-2">
+              <input type="checkbox" name="custom-switch-checkbox" data-id="'.$query->id.'" class="custom-switch-input muda-status">
+              <span class="custom-switch-indicator"></span>
+              </label>';
               }
+                return $botao;
+
             })
             ->rawColumns(['icone', 'status', 'editar'])
             ->setRowId('id');

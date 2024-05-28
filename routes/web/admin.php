@@ -32,6 +32,7 @@ Route::resource('admin/slider', SliderController::class)
 
 
 /** Rota slider destaque   */
+Route::put('muda-status', [CategoriaController::class, 'mudaStatus'])->name('categoria.muda-status');
 Route::resource('admin/categoria', CategoriaController::class)
 ->middleware(['auth', 'admin']);
 
