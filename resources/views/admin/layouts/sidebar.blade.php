@@ -20,6 +20,7 @@
           <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Gerencie Categorias</span></a>
           <ul class="dropdown-menu">
             <li><a class="nav-link" href="{{ route('categoria.index')}}">Categorias</a></li>
+            <li><a class="nav-link" href="{{ route('sub-categoria.index')}}">Sub-Categorias</a></li>
           </ul>
         </li>
         <li><a class="nav-link" href="blank.html"><i class="far fa-square"></i> <span>Blank Page</span></a></li>

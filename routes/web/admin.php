@@ -4,6 +4,7 @@ use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\CategoriaController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SliderController;
+use App\Http\Controllers\Backend\SubCategoriaController;
 use Illuminate\Support\Facades\Route;
 
 //rota admin
@@ -31,8 +32,14 @@ Route::resource('admin/slider', SliderController::class)
 ->middleware(['auth', 'admin']);
 
 
-/** Rota slider destaque   */
+/** Rota categoria pai */
 Route::put('muda-status', [CategoriaController::class, 'mudaStatus'])->name('categoria.muda-status');
 Route::resource('admin/categoria', CategoriaController::class)
 ->middleware(['auth', 'admin']);
+
+/** Rota categoria filho   */
+Route::put('subcategoria/muda-status', [SubCategoriaController::class, 'mudaStatus'])->name('sub-categoria.muda-status');
+Route::resource('admin/sub-categoria', SubCategoriaController::class)
+->middleware(['auth', 'admin']);
+
 
