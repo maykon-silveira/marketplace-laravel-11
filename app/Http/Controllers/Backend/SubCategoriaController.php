@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Backend;
 
 use App\DataTables\SubCategoriaDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\Categoria;
+use App\Models\SubCategoria;
 use Illuminate\Http\Request;
+use Str;
 
 class SubCategoriaController extends Controller
 {
@@ -21,7 +24,8 @@ class SubCategoriaController extends Controller
      */
     public function create()
     {
-        return view('admin.sub-categoria.create');
+        $categorias = Categoria::all();
+        return view('admin.sub-categoria.create', compact('categorias'));
     }
 
     /**
@@ -29,7 +33,24 @@ class SubCategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->all());
+        $request->validate([
+            'id_categoria' => ['required'],
+            'nome' => ['required', 'max:200', 'unique:sub_categorias,nome'],
+            'status' => ['required'],
+        ]);
+
+        $subcategorias = new SubCategoria();
+        $subcategorias->id_categoria = $request->id_categoria;
+        $subcategorias->nome = $request->nome;
+        $subcategorias->status = $request->status;
+        $subcategorias->slug = Str::slug($request->nome);
+        $subcategorias->save();
+
+
+        toastr('SubCategoria cadstrada com sucesso!', 'success');
+        return redirect()->route('sub-categoria.index');
+
     }
 
     /**

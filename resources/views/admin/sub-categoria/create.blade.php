@@ -29,7 +29,15 @@
 
                 <form action="{{ route('sub-categoria.store') }}" method="post" enctype="multipart/form-data">
                  @csrf
-               
+
+                 <div class="form-group">
+                    <label for="">Categoria</label>
+                    <select name="id_categoria" class="form-control">
+                        @foreach ($categorias as $categoria)
+                           <option value="{{ $categoria->id }}">{{ $categoria->nome }}</option>
+                        @endforeach
+                    </select>
+                  </div>
 
                   <div class="form-group">
                     <label for="">Nome</label>
