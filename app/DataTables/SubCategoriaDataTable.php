@@ -23,13 +23,12 @@ class SubCategoriaDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('editar', function($query){
-              $editar = "<a href='".route('categoria.edit', $query->id)."' class='btn btn-primary mb-2'><i class='far fa-edit'></i></a>";
-              $excluir = "<a href='".route('categoria.destroy', $query->id)."' class='btn btn-danger delete-item'><i class='far fa-trash-alt'></i></a>";
+              $editar = "<a href='".route('sub-categoria.edit', $query->id)."' class='btn btn-primary mr-2'><i class='far fa-edit'></i></a>";
+              $excluir = "<a href='".route('sub-categoria.destroy', $query->id)."' class='btn btn-danger delete-item'><i class='far fa-trash-alt'></i></a>";
               return $editar.$excluir;
             })
-            ->addColumn('icone', function($query){
-              $icone = "<i class='".$query->icone."' style='font-size:20px;'></i>";
-              return $icone;
+            ->addColumn('categoria', function($query){
+                return $query->categoria ? $query->categoria->nome : null;
             })
             ->addColumn('status', function($query){
               if($query->status == 1){
@@ -46,7 +45,7 @@ class SubCategoriaDataTable extends DataTable
                 return $botao;
 
             })
-            ->rawColumns(['icone', 'status', 'editar'])
+            ->rawColumns(['status', 'editar'])
             ->setRowId('id');
     }
 
@@ -56,6 +55,7 @@ class SubCategoriaDataTable extends DataTable
     public function query(SubCategoria $model): QueryBuilder
     {
         return $model->newQuery();
+        //return $model->newQuery()->with('categoria');
     }
 
     /**
@@ -91,13 +91,13 @@ class SubCategoriaDataTable extends DataTable
         return [
 
             Column::make('id'),
-            Column::make('icone'),
             Column::make('nome'),
             Column::make('status'),
+            Column::make('categoria'),
             Column::computed('editar')
                   ->exportable(false)
                   ->printable(false)
-                  ->width(60)
+                  ->width(200)
                   ->addClass('text-center'),
         ];
     }
