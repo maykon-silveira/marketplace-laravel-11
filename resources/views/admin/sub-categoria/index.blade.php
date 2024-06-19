@@ -47,7 +47,7 @@
                 let id = $(this).data('id');
 
                 $.ajax({
-                    url: "{{route('categoria.muda-status')}}",
+                    url: "{{route('sub-categoria.muda-status')}}",
                     method: 'PUT',
                     data: {
                         status: checando,

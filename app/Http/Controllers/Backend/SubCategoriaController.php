@@ -53,6 +53,15 @@ class SubCategoriaController extends Controller
 
     }
 
+    public function mudaStatus(Request $request)
+    {
+       $subCategoria = SubCategoria::findOrFail($request->id);
+       $subCategoria->status = $request->status == 'true' ? 1 : 0;
+       $subCategoria->save();
+
+       return response(['message' => 'Status atualizado com sucesso!']);
+    }
+
     /**
      * Display the specified resource.
      */
