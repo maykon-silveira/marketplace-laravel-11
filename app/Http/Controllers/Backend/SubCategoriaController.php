@@ -75,7 +75,9 @@ class SubCategoriaController extends Controller
      */
     public function edit(string $id)
     {
-        return view('admin.sub-categoria.edit');
+        $categorias = Categoria::all();
+        $subCategoria = SubCategoria::findOrFail($id);
+        return view('admin.sub-categoria.edit', compact('subCategoria', 'categorias'));
     }
 
     /**
@@ -83,7 +85,25 @@ class SubCategoriaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        //dd($request->all());
+        $request->validate([
+            'id_categoria' => ['required'],
+            'nome' => ['required', 'max:200', 'unique:sub_categorias,nome,'.$id],
+            'status' => ['required'],
+        ]);
+
+        $subcategorias = SubCategoria::findOrFail($id);
+        $subcategorias->id_categoria = $request->id_categoria;
+        $subcategorias->nome = $request->nome;
+        $subcategorias->status = $request->status;
+        $subcategorias->slug = Str::slug($request->nome);
+        $subcategorias->save();
+
+
+        toastr('SubCategoria atualizada com sucesso!', 'success');
+        return redirect()->route('sub-categoria.index');
+
+
     }
 
     /**

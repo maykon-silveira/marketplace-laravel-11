@@ -27,21 +27,30 @@
 
             <div class="card-body">
 
-                <form action="{{ route('sub-categoria.update', $categoria->id) }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('sub-categoria.update', $subCategoria->id) }}" method="post" enctype="multipart/form-data">
                  @csrf
                  @method('PUT')
-                 
+
                   <div class="form-group">
                     <label for="">Nome</label>
-                    <input type="text" name="nome" placeholder="Add nome da categoria" class="form-control" value="{{ old('nome', $categoria->nome)}}">
+                    <input type="text" name="nome" placeholder="Add nome da categoria" class="form-control" value="{{ old('nome', $subCategoria->nome)}}">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="">Categoria</label>
+                    <select name="id_categoria" class="form-control">
+                        @foreach ($categorias as $categoria)
+                           <option value="{{ $categoria->id }}" {{ $categoria->id == $subCategoria->id_categoria ? 'selected' : null }}>{{ $categoria->nome }}</option>
+                        @endforeach
+                    </select>
                   </div>
 
 
                   <div class="form-group">
                     <label for="">Status</label>
                     <select name="status" class="form-control">
-                        <option value="1" {{ $categoria->status == 1 ? 'selected' : null }}>Ativo</option>
-                        <option value="0"  {{ $categoria->status == 0 ? 'selected' : null }}>Cancelado</option>
+                        <option value="1" {{ $subCategoria->status == 1 ? 'selected' : null }}>Ativo</option>
+                        <option value="0"  {{ $subCategoria->status == 0 ? 'selected' : null }}>Cancelado</option>
                     </select>
                   </div>
 
