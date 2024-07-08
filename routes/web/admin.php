@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\CategoriaController;
+use App\Http\Controllers\Backend\CategoriaFilhoController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoriaController;
@@ -37,9 +38,15 @@ Route::put('muda-status', [CategoriaController::class, 'mudaStatus'])->name('cat
 Route::resource('admin/categoria', CategoriaController::class)
 ->middleware(['auth', 'admin']);
 
-/** Rota categoria filho   */
+/** Rota categoria sub-categoria  */
 Route::put('subcategoria/muda-status', [SubCategoriaController::class, 'mudaStatus'])->name('sub-categoria.muda-status');
 Route::resource('admin/sub-categoria', SubCategoriaController::class)
+->middleware(['auth', 'admin']);
+
+/** Rota categoria filho  */
+Route::put('categoria-filho/muda-status', [CategoriaFilhoController::class, 'mudaStatus'])->name('categoria-filho.muda-status');
+Route::get('get-subcategorias', [CategoriaFilhoController::class, 'getSubCategorias'])->name('get-subcategorias');
+Route::resource('admin/categoria-filho', CategoriaFilhoController::class)
 ->middleware(['auth', 'admin']);
 
 
