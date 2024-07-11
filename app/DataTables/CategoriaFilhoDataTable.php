@@ -30,6 +30,9 @@ class CategoriaFilhoDataTable extends DataTable
             ->addColumn('categoria', function($query){
                 return $query->categoria ? $query->categoria->nome : null;
             })
+            ->addColumn('subcategoria', function($query){
+                return $query->subcategoria ? $query->subcategoria->nome : null;
+            })
             ->addColumn('status', function($query){
               if($query->status == 1){
               $botao = '<label class="custom-switch mt-2">
@@ -52,7 +55,7 @@ class CategoriaFilhoDataTable extends DataTable
     /**
      * Get the query source of dataTable.
      */
-    public function query(SubCategoria $model): QueryBuilder
+    public function query(CategoriaFilho $model): QueryBuilder
     {
         return $model->newQuery();
         //return $model->newQuery()->with('categoria');
@@ -92,8 +95,9 @@ class CategoriaFilhoDataTable extends DataTable
 
             Column::make('id'),
             Column::make('nome'),
-            Column::make('status'),
             Column::make('categoria'),
+            Column::make('subcategoria'),
+            Column::make('status'),
             Column::computed('editar')
                   ->exportable(false)
                   ->printable(false)
