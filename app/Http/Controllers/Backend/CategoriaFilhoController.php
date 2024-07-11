@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\CategoriaFilhoDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Categoria;
+use App\Models\CategoriaFilho;
 use App\Models\SubCategoria;
 use Illuminate\Http\Request;
+
+use Str;
 
 class CategoriaFilhoController extends Controller
 {
@@ -32,7 +35,23 @@ class CategoriaFilhoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'id_categoria' => ['required'],
+            'sub_categoria_id' => ['required'],
+            'nome' => ['required', 'max:200', 'unique:categoria_filhos,nome'],
+            'status' => ['required']
+        ]);
+
+        $categoriaFilho = new CategoriaFilho();
+        $categoriaFilho->id_categoria = $request->id_categoria;
+        $categoriaFilho->sub_categoria_id = $request->sub_categoria_id;
+        $categoriaFilho->nome = $request->nome;
+        $categoriaFilho->slug = Str::slug($request->nome);
+        $categoriaFilho->status = $request->status;
+        $categoriaFilho->save();
+
+        toastr('Categoria criada com sucesso!', 'success');
+        return redirect()->route('categoria-filho.index');
     }
 
     /**

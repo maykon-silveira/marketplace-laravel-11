@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('categoria_filhos', function (Blueprint $table) {
             $table->id();
+            $table->integer('id_categoria');
+            $table->integer('sub_categoria_id');
+            $table->string('nome');
+            $table->string('slug');
+            $table->boolean('status');
             $table->timestamps();
         });
     }
