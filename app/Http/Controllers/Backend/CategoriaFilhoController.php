@@ -86,4 +86,13 @@ class CategoriaFilhoController extends Controller
     {
         //
     }
+
+    public function mudaStatus(Request $request)
+    {
+       $categoriaFilho = CategoriaFilho::findOrFail($request->id);
+       $categoriaFilho->status = $request->status == 'true' ? 1 : 0;
+       $categoriaFilho->save();
+
+       return response(['message' => 'Status atualizado com sucesso!']);
+    }
 }
