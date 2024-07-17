@@ -68,7 +68,10 @@ class CategoriaFilhoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $categorias = Categoria::all();
+        $categoriaFilho = CategoriaFilho::findOrFail($id);
+        $subCategorias = SubCategoria::where('id_categoria', $categoriaFilho->id_categoria)->get();
+        return view('admin.categoria-filho.edit', compact('categorias', 'categoriaFilho', 'subCategorias'));
     }
 
     /**
@@ -76,7 +79,24 @@ class CategoriaFilhoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $request->validate([
+            'id_categoria' => ['required'],
+            'sub_categoria_id' => ['required'],
+            'nome' => ['required', 'max:200', 'unique:categoria_filhos,nome,'.$id],
+            'status' => ['required']
+        ]);
+
+        $categoriaFilho = CategoriaFilho::findOrFail($id);
+        $categoriaFilho->id_categoria = $request->id_categoria;
+        $categoriaFilho->sub_categoria_id = $request->sub_categoria_id;
+        $categoriaFilho->nome = $request->nome;
+        $categoriaFilho->slug = Str::slug($request->nome);
+        $categoriaFilho->status = $request->status;
+        $categoriaFilho->save();
+
+        toastr('Categoria atualizada com sucesso!', 'success');
+        return redirect()->route('categoria-filho.index');
     }
 
     /**

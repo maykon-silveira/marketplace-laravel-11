@@ -23,8 +23,8 @@ class CategoriaFilhoDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('editar', function($query){
-              $editar = "<a href='".route('sub-categoria.edit', $query->id)."' class='btn btn-primary mr-2'><i class='far fa-edit'></i></a>";
-              $excluir = "<a href='".route('sub-categoria.destroy', $query->id)."' class='btn btn-danger delete-item'><i class='far fa-trash-alt'></i></a>";
+              $editar = "<a href='".route('categoria-filho.edit', $query->id)."' class='btn btn-primary mr-2'><i class='far fa-edit'></i></a>";
+              $excluir = "<a href='".route('categoria-filho.destroy', $query->id)."' class='btn btn-danger delete-item'><i class='far fa-trash-alt'></i></a>";
               return $editar.$excluir;
             })
             ->addColumn('categoria', function($query){
