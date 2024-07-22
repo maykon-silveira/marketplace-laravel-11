@@ -104,7 +104,10 @@ class CategoriaFilhoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $categoriaFilho = CategoriaFilho::findOrFail($id);
+        $categoriaFilho->delete();
+
+        return response(['status' => 'success', 'message' => 'Excluído com sucesso!']);
     }
 
     public function mudaStatus(Request $request)
