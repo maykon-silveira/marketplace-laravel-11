@@ -17,6 +17,7 @@
             <li class="{{ ativadorLinks(['slider.*']) }}"><a class="nav-link" href="{{ route('slider.index') }}">Slide Destaque</a></li>
           </ul>
         </li>
+
         <li class="menu-header">Categorias</li>
         <li class="dropdown {{ ativadorLinks([
         'categoria.*',
@@ -28,6 +29,17 @@
             <li class="{{ ativadorLinks(['categoria.*']) }}"><a class="nav-link" href="{{ route('categoria.index')}}">Categorias</a></li>
             <li class="{{ ativadorLinks(['sub-categoria.*']) }}"><a class="nav-link" href="{{ route('sub-categoria.index')}}">Sub-Categorias</a></li>
             <li class="{{ ativadorLinks(['categoria-filho.*']) }}"><a class="nav-link" href="{{ route('categoria-filho.index')}}">Categoria Filho</a></li>
+          </ul>
+        </li>
+
+        <li class="menu-header">Produtos</li>
+        <li class="dropdown {{ ativadorLinks([
+        'marcas.*'
+        ]) }}">
+          <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Gerenciar Produtos</span></a>
+          <ul class="dropdown-menu">
+            <li class="{{ ativadorLinks(['marcas.*']) }}"><a class="nav-link" href="{{ route('marcas.index')}}">Marcas</a></li>
+
           </ul>
         </li>
         <li><a class="nav-link" href="blank.html"><i class="far fa-square"></i> <span>Blank Page</span></a></li>
