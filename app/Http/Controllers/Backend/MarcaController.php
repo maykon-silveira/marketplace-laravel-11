@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Backend;
 
 use App\DataTables\MarcasDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\Marca;
+use App\Traits\UploadImageTrait;
 use Illuminate\Http\Request;
+use Str;
 
 class MarcaController extends Controller
 {
+    use UploadImageTrait;
     /**
      * Display a listing of the resource.
      */
@@ -21,7 +25,7 @@ class MarcaController extends Controller
      */
     public function create()
     {
-        //
+       return view('admin.marcas.create');
     }
 
     /**
@@ -29,7 +33,27 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->all());
+        $request->validate([
+          'logo' => ['image', 'required', 'max:2000'],
+          'nome' => ['required', 'max:200'],
+          'destacada' => ['required'],
+          'status' => ['required'],
+        ]);
+
+        $logoPasta = $this->uploadImage($request, 'logo', 'uploads');
+        $marca = new Marca();
+
+        $marca->logo = $logoPasta;
+        $marca->nome = $request->nome;
+        $marca->destacada = $request->destacada;
+        $marca->status = $request->status;
+        $marca->slug = Str::slug($request->nome);
+        $marca->save();
+
+        toastr('Cadastrada com sucesso', 'success');
+        return redirect()->route('marcas.index');
+
     }
 
     /**
