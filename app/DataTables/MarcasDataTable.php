@@ -23,13 +23,23 @@ class MarcasDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('editar', function($query){
-              $editar = "<a href='".route('categoria.edit', $query->id)."' class='btn btn-primary mb-2'><i class='far fa-edit'></i></a>";
-              $excluir = "<a href='".route('categoria.destroy', $query->id)."' class='btn btn-danger delete-item'><i class='far fa-trash-alt'></i></a>";
+              $editar = "<a href='".route('marcas.edit', $query->id)."' class='btn btn-primary mr-2'><i class='far fa-edit'></i></a>";
+              $excluir = "<a href='".route('marcas.destroy', $query->id)."' class='btn btn-danger delete-item'><i class='far fa-trash-alt'></i></a>";
               return $editar.$excluir;
             })
-            ->addColumn('icone', function($query){
-              $icone = "<i class='".$query->icone."' style='font-size:20px;'></i>";
-              return $icone;
+            ->addColumn('destacada', function($query){
+              $sim = "<button class='btn btn-success'>Sim</button>";
+              $nao = "<button class='btn btn-danger'>Não</button>";
+              if($query->destacada == 1){
+                return $sim;
+              }else{
+                return $nao;
+              }
+
+            })
+            ->addColumn('logo', function($query){
+              $logo = "<img src='".asset($query->logo)."' style='width:100px;'>";
+              return $logo;
             })
             ->addColumn('status', function($query){
               if($query->status == 1){
@@ -46,7 +56,7 @@ class MarcasDataTable extends DataTable
                 return $botao;
 
             })
-            ->rawColumns(['icone', 'status', 'editar'])
+            ->rawColumns(['logo', 'destacada', 'status', 'editar'])
             ->setRowId('id');
     }
 
@@ -91,13 +101,14 @@ class MarcasDataTable extends DataTable
         return [
 
             Column::make('id'),
-            Column::make('icone'),
+            Column::make('logo'),
             Column::make('nome'),
+            Column::make('destacada'),
             Column::make('status'),
             Column::computed('editar')
                   ->exportable(false)
                   ->printable(false)
-                  ->width(60)
+                  ->width(200)
                   ->addClass('text-center'),
         ];
     }
