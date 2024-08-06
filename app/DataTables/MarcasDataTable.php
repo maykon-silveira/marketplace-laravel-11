@@ -118,6 +118,6 @@ class MarcasDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Categoria_' . date('YmdHis');
+        return 'Marca_' . date('YmdHis');
     }
 }

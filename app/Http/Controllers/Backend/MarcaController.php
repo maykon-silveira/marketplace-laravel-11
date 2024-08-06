@@ -87,4 +87,13 @@ class MarcaController extends Controller
     {
         //
     }
+
+    public function mudaStatus(Request $request)
+    {
+       $marca = Marca::findOrFail($request->id);
+       $marca->status = $request->status == 'true' ? 1 : 0;
+       $marca->save();
+
+       return response(['message' => 'Status atualizado com sucesso!']);
+    }
 }
