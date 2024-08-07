@@ -69,8 +69,10 @@ class MarcaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $marca = Marca::findOrFail($id);
+        return view('admin.marcas.edit', compact('marca'));
     }
+
 
     /**
      * Update the specified resource in storage.
