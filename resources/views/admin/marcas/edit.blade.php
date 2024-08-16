@@ -25,6 +25,7 @@
                     <div class="card-body">
                         <form action="{{ route('marcas.update', $marca->id) }}" method="post" enctype="multipart/form-data">
                             @csrf
+                            @method('PUT')
                             <div class="form-group">
                                 <label for="">Visualizar Logo</label>
                                 <img src="{{ asset($marca->logo) }}" alt="{{ $marca->nome }}" style="width:150px; height:auto;">

@@ -79,7 +79,28 @@ class MarcaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        //dd($request->all());
+        $request->validate([
+          'logo' => ['image', 'max:2000'],
+          'nome' => ['required', 'max:200'],
+          'destacada' => ['required'],
+          'status' => ['required'],
+        ]);
+
+        $marca = Marca::findOrFail($id);
+
+        $logoPasta = $this->uploadImage($request, 'logo', 'uploads', $marca->logo);
+
+        $marca->logo = empty(!$logoPasta) ? $logoPasta : $marca->logo;
+        $marca->nome = $request->nome;
+        $marca->slug = Str::slug($request->nome);
+        $marca->destacada = $request->destacada;
+        $marca->status = $request->status;
+        $marca->save();
+
+        toastr('Atualizado com sucesso!', 'success');
+        return redirect()->route('marcas.index');
+
     }
 
     /**
@@ -87,7 +108,11 @@ class MarcaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $marca = Marca::findOrFail($id);
+        $this->deleteImage($marca->logo);
+        $marca->delete();
+
+        return response(['status' => 'success', 'message' => 'Excluido com sucesso!']);
     }
 
     public function mudaStatus(Request $request)
