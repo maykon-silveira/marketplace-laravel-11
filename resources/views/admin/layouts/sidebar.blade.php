@@ -42,6 +42,17 @@
 
           </ul>
         </li>
+
+        <li class="menu-header">Lojas</li>
+        <li class="dropdown {{ ativadorLinks([
+        'vendedor-perfil.*'
+        ]) }}">
+          <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Vendedores</span></a>
+          <ul class="dropdown-menu">
+            <li class="{{ ativadorLinks(['vendedor-perfil.*']) }}"><a class="nav-link" href="{{ route('vendedor-perfil.index')}}">Perfil do Vendedor</a></li>
+
+          </ul>
+        </li>
         <li><a class="nav-link" href="blank.html"><i class="far fa-square"></i> <span>Blank Page</span></a></li>
     </ul>
 

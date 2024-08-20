@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\AdminPerfilVendedorController;
 use App\Http\Controllers\Backend\CategoriaController;
 use App\Http\Controllers\Backend\CategoriaFilhoController;
 use App\Http\Controllers\Backend\MarcaController;
@@ -54,6 +55,11 @@ Route::resource('admin/categoria-filho', CategoriaFilhoController::class)
 /** Rota marcas */
 Route::put('marcas/muda-status', [MarcaController::class, 'mudaStatus'])->name('marcas.muda-status');
 Route::resource('admin/marcas', MarcaController::class)
+->middleware(['auth', 'admin']);
+
+
+//Perfil do vendedor
+Route::resource('vendedor-perfil', AdminPerfilVendedorController::class)
 ->middleware(['auth', 'admin']);
 
 
