@@ -17,10 +17,12 @@ return new class extends Migration
             $table->string('fone');
             $table->string('email');
             $table->text('endereco');
-            $table->text('fb_link');
-            $table->text('insta_link');
-            $table->text('x_link');
-            $table->text('yt_link');
+            $table->text('descricao');
+            $table->text('fb_link')->nullable();
+            $table->text('insta_link')->nullable();
+            $table->text('x_link')->nullable();
+            $table->text('yt_link')->nullable();
+            $table->integer('id_usuario');
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vendedors');
+        Schema::dropIfExists('vendedores');
     }
 };
