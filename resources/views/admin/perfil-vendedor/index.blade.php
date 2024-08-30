@@ -30,49 +30,54 @@
 <form action="{{ route('vendedor-perfil.store') }}" method="post" enctype="multipart/form-data">
  @csrf
 <div class="form-group">
+<label for="">Visualizar(1920x500px)</label><br>
+<img src="{{ asset($perfil->banner )}}" alt="" style="width:30%;">
+</div>
+
+<div class="form-group">
 <label for="">Imagem(1920x500px)</label>
 <input type="file" name="banner" class="form-control" >
 </div>
 
 <div class="form-group">
 <label for="">Whatsapp</label>
-<input type="text" name="fone" class="form-control" placeholder="Adicione o Whatsapp" value="{{old('fone')}}">
+<input type="text" name="fone" class="form-control" placeholder="Adicione o Whatsapp" value="{{old('fone', $perfil->fone)}}">
 </div>
 
 <div class="form-group">
 <label for="">E-mail</label>
-<input type="email" name="email" class="form-control" placeholder="Adicione o e-mail" value="{{ old('email') }}">
+<input type="email" name="email" class="form-control" placeholder="Adicione o e-mail" value="{{ old('email', $perfil->email) }}">
 </div>
 
 <div class="form-group">
 <label for="">Endereço</label>
-<input type="text" name="endereco" class="form-control" placeholder="Adicione o endereço com número" value="{{ old('endereco') }}">
+<input type="text" name="endereco" class="form-control" placeholder="Adicione o endereço com número" value="{{ old('endereco', $perfil->endereco) }}">
 </div>
 
 <div class="form-group">
 <label for="">Youtube</label>
-<input type="url" name="yt_link" class="form-control" placeholder="Adicione url da rede social" value="{{ old('yt_link') }}">
+<input type="url" name="yt_link" class="form-control" placeholder="Adicione url da rede social" value="{{ old('yt_link', $perfil->yt_link) }}">
 </div>
 
 <div class="form-group">
 <label for="">Instagram</label>
-<input type="url" name="insta_link" class="form-control" placeholder="Adicione url da rede social" value="{{ old('insta_link') }}">
+<input type="url" name="insta_link" class="form-control" placeholder="Adicione url da rede social" value="{{ old('insta_link', $perfil->insta_link) }}">
 </div>
 
 <div class="form-group">
 <label for="">Facebook</label>
-<input type="url" name="fb_link" class="form-control" placeholder="Adicione url da rede social" value="{{ old('fb_link') }}">
+<input type="url" name="fb_link" class="form-control" placeholder="Adicione url da rede social" value="{{ old('fb_link', $perfil->fb_link) }}">
 </div>
 
 
 <div class="form-group">
 <label for="">X</label>
-<input type="url" name="x_link" class="form-control" placeholder="Adicione url da rede social" value="{{ old('x_link') }}">
+<input type="url" name="x_link" class="form-control" placeholder="Adicione url da rede social" value="{{ old('x_link', $perfil->x_link) }}">
 </div>
 
 <div class="form-group">
 <label for="">Descrição</label>
-<textarea type="text" name="descricao" class="summernote"></textarea>
+<textarea type="text" name="descricao" class="summernote">{{ $perfil->descricao }}</textarea>
 </div>
 
 
