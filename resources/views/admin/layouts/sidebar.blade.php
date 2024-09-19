@@ -34,12 +34,12 @@
 
         <li class="menu-header">Produtos</li>
         <li class="dropdown {{ ativadorLinks([
-        'marcas.*'
+        'produtos.*'
         ]) }}">
           <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Gerenciar Produtos</span></a>
           <ul class="dropdown-menu">
             <li class="{{ ativadorLinks(['marcas.*']) }}"><a class="nav-link" href="{{ route('marcas.index')}}">Marcas</a></li>
-            <li class="{{ ativadorLinks(['marcas.*']) }}"><a class="nav-link" href="{{ route('marcas.index')}}">Produtos</a></li>
+            <li class="{{ ativadorLinks(['produtos.*']) }}"><a class="nav-link" href="{{ route('produtos.index')}}">Produtos</a></li>
 
           </ul>
         </li>

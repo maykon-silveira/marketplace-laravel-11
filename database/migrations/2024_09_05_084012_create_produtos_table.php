@@ -30,9 +30,7 @@ return new class extends Migration
             $table->double('valor_oferta')->nullable();
             $table->date('inicio_oferta')->nullable();
             $table->date('fim_oferta')->nullable();
-            $table->boolean('top')->nullable();
-            $table->boolean('melhor')->nullable();
-            $table->boolean('destaque')->nullable();
+            $table->boolean('tipo_produto')->nullable();
             $table->boolean('status');
             $table->integer('aprovado')->default(0);
             $table->string('google_titulo')->nullable();

@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\AdminPerfilVendedorController;
 use App\Http\Controllers\Backend\CategoriaController;
 use App\Http\Controllers\Backend\CategoriaFilhoController;
 use App\Http\Controllers\Backend\MarcaController;
+use App\Http\Controllers\Backend\ProdutoController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoriaController;
@@ -60,6 +61,11 @@ Route::resource('admin/marcas', MarcaController::class)
 
 //Perfil do vendedor
 Route::resource('vendedor-perfil', AdminPerfilVendedorController::class)
+->middleware(['auth', 'admin']);
+
+
+//Produtos
+Route::resource('produtos', ProdutoController::class)
 ->middleware(['auth', 'admin']);
 
 
