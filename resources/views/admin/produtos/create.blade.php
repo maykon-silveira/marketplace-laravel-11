@@ -44,7 +44,7 @@
 <div class="col-md-4">
 <div class="form-group">
 <label for="">Categoria</label>
-<select name="categoria_id" class="form-control">
+<select name="categoria_id" class="form-control categoria-chefe">
 <option value="">Selecione</option>
 @foreach ($categorias as $categoria)
 <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
@@ -56,11 +56,8 @@
 <div class="col-md-4">
 <div class="form-group">
 <label for="">Sub-Categoria</label>
-<select name="sub_categoria_id" class="form-control">
+<select name="sub_categoria_id" class="form-control sub_categoria_id">
 <option value="">Selecione</option>
-
-<option value="">SubCategoria</option>
-
 </select>
 </div>
 </div>
@@ -69,11 +66,8 @@
 <div class="col-md-4">
 <div class="form-group">
 <label for="">Categoria Filho</label>
-<select name="filho_categoria_id" class="form-control">
+<select name="filho_categoria_id" class="form-control filho_categoria_id">
 <option value="">Selecione</option>
-
-<option value="">Categoria Filho</option>
-
 </select>
 </div>
 </div>
@@ -205,3 +199,62 @@
 </div>
 </section>
 @endsection
+
+@push('scripts')
+ <script>
+$(document).ready(function(){
+
+//chama as sub-categorias ligadas as categorias
+$('body').on('change', '.categoria-chefe', function(m){
+ //alert('Sou Aluno da EAD MAykonSilveira.com.br');
+ let id = $(this).val();
+ ///console.log(id);
+ $.ajax({
+method: 'GET',
+url: "{{ route('produtos.get-subCategorias') }}",
+data: {
+id:id
+},
+success: function(data){
+$('.sub_categoria_id').html('<option value="">Selecione</option>');
+
+$.each(data, function(i, item){
+$('.sub_categoria_id').append(`<option value="${item.id}">${item.nome}</option>`);
+});
+},
+error: function(xhr, status, error){
+console.log(error);
+}
+ })
+
+})
+
+//chama as categorias filhos ligadas as sub-categorias
+$('body').on('change', '.sub_categoria_id', function(m){
+ //alert('Sou Aluno da EAD MAykonSilveira.com.br');
+ let id = $(this).val();
+ ///console.log(id);
+ $.ajax({
+method: 'GET',
+url: "{{ route('produtos.get-filhoCategorias') }}",
+data: {
+id:id
+},
+success: function(data){
+$('.filho_categoria_id').html('<option value="">Selecione</option>');
+
+$.each(data, function(i, item){
+$('.filho_categoria_id').append(`<option value="${item.id}">${item.nome}</option>`);
+});
+},
+error: function(xhr, status, error){
+console.log(error);
+}
+ })
+
+})
+
+
+})
+ </script>
+@endpush

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\ProdutoDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Categoria;
+use App\Models\CategoriaFilho;
 use App\Models\Marca;
+use App\Models\SubCategoria;
 use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
@@ -26,6 +28,22 @@ class ProdutoController extends Controller
         $categorias = Categoria::all();
         $marcas = Marca::all();
         return view('admin.produtos.create', compact('categorias', 'marcas'));
+    }
+
+    //chamada da sub-categoria
+    public function getSubCategorias(Request $request)
+    {
+       $subCategoria = SubCategoria::where('id_categoria', $request->id)->get();
+
+       return $subCategoria;
+    }
+
+    //chamada da categoria filho
+    public function getCategoriasFilho(Request $request)
+    {
+       $categoriaFilho = CategoriaFilho::where('sub_categoria_id', $request->id)->get();
+
+       return $categoriaFilho;
     }
 
     /**

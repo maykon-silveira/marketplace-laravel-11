@@ -65,6 +65,8 @@ Route::resource('vendedor-perfil', AdminPerfilVendedorController::class)
 
 
 //Produtos
+Route::get('produtos/get-subcategorias', [ProdutoController::class, 'getSubCategorias'])->name('produtos.get-subCategorias');
+Route::get('produtos/get-categorias-filho', [ProdutoController::class, 'getCategoriasFilho'])->name('produtos.get-filhoCategorias');
 Route::resource('produtos', ProdutoController::class)
 ->middleware(['auth', 'admin']);
 
