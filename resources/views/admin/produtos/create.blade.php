@@ -27,7 +27,7 @@
 
 <div class="card-body">
 
-<form action="{{ route('produtos.index') }}" method="post" enctype="multipart/form-data">
+<form action="{{ route('produtos.store') }}" method="post" enctype="multipart/form-data">
 @csrf
 <div class="form-group">
 <label for="">Imagem(1200x1200px)</label>
