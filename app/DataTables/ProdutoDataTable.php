@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Models\Produto;
 use App\Models\Slider;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -24,25 +25,59 @@ class ProdutoDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('editar', function($query){
             $edit = "<a href='".route('produtos.edit', $query->id)."' class='btn btn-primary mb-2'><i class='far fa-edit'></i></a>";
-            $delete = "<a href='".route('produtos.destroy', $query->id)."' class='btn btn-danger delete-item'><i class='far fa-trash-alt'></i></a>";
-            return $edit.$delete;
+            $delete = "<a href='".route('produtos.destroy', $query->id)."' class='btn btn-danger mb-2 ml-1 delete-item'><i class='far fa-trash-alt'></i></a>";
+            $maisBtn = '<div class="dropdown dropleft d-inline">
+                <button class="btn btn-primary dropdown-toggle mb-2 ml-1 type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-cog"></i>
+                </button>
+                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+                  <a class="dropdown-item has-icon" href=""><i class="far fa-heart"></i> Galerias</a>
+                  <a class="dropdown-item has-icon" href=""><i class="far fa-file"></i> Adicionais</a>
+                </div>
+              </div>';
+            return $edit.$delete.$maisBtn;
             })
             ->addColumn('status', function($query){
-                $ativo = '<i class="badge badge-success">Ativo</i>';
-                $cancelado = '<i class="badge badge-danger">Cancelado</i>';
                 if($query->status == 1){
-                  return $ativo;
+                $botao = '<label class="custom-switch mt-2">
+                <input type="checkbox" checked name="custom-switch-checkbox" data-id="'.$query->id.'" class="custom-switch-input muda-status">
+                <span class="custom-switch-indicator"></span>
+                </label>';
                 }else{
-                  return $cancelado;
+                $botao = '<label class="custom-switch mt-2">
+                <input type="checkbox" name="custom-switch-checkbox" data-id="'.$query->id.'" class="custom-switch-input muda-status">
+                <span class="custom-switch-indicator"></span>
+                </label>';
                 }
+                  return $botao;
+
+              })
+
+              ->addColumn('categoria', function($query){
+                return $query->categoria ? $query->categoria->nome : 'Vazio';
+              })
+
+              ->addColumn('tipo_produto', function($query){
+                switch($query->tipo_produto){
+                  case 'novo':
+                    return '<i class="badge badge-success">Novo</i>';
+                  break;
+                  case 'top':
+                    return '<i class="badge badge-info">Top</i>';
+                  break;
+                  case 'destaque':
+                    return '<i class="badge badge-warning">Destaque</i>';
+                  break;
+                  case 'melhor':
+                    return '<i class="badge badge-dark">Melhor</i>';
+                  break;
+                }
+               })
+
+            ->addColumn('capa', function($query){
+             return $img = "<img src='". asset($query->capa) ."' style='width: 30%; height:auto;'>";
             })
-            ->addColumn('ordem', function($query){
-               return $query->ordem;
-            })
-            ->addColumn('banner', function($query){
-             return $img = "<img src='". asset($query->banner) ."' style='width: 30%; height:auto;'>";
-            })
-            ->rawColumns(['banner', 'editar', 'status'])
+            ->rawColumns(['capa', 'editar', 'status', 'tipo_produto'])
             ->setRowId('id');
 
     }
@@ -50,7 +85,7 @@ class ProdutoDataTable extends DataTable
     /**
      * Get the query source of dataTable.
      */
-    public function query(Slider $model): QueryBuilder
+    public function query(Produto $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -88,14 +123,15 @@ class ProdutoDataTable extends DataTable
         return [
 
             Column::make('id'),
-            Column::make('banner'),
-            Column::make('titulo'),
+            Column::make('capa'),
+            Column::make('nome'),
+            Column::make('categoria'),
             Column::make('status'),
-            Column::make('ordem'),
+            Column::make('tipo_produto'),
             Column::computed('editar')
             ->exportable(false)
             ->printable(false)
-            ->width(60)
+            ->width(200)
             ->addClass('text-center'),
         ];
     }
