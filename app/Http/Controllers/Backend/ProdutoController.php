@@ -137,4 +137,13 @@ class ProdutoController extends Controller
 
         return $categoriaFilho;
      }
+
+     public function mudaStatus(Request $request)
+     {
+        $produto = Produto::findOrFail($request->id);
+        $produto->status = $request->status == 'true' ? 1 : 0;
+        $produto->save();
+
+        return response(['message' => 'Status atualizado com sucesso!']);
+     }
 }
