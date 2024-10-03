@@ -103,7 +103,12 @@ class ProdutoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $produto = Produto::findOrFail($id);
+        $categorias = Categoria::all();
+        $marcas = Marca::all();
+        $subCategorias = SubCategoria::where('id_categoria', $produto->categoria_id)->get();
+        $categoriaFilhos = CategoriaFilho::where('sub_categoria_id', $produto->sub_categoria_id)->get();
+        return view('admin.produtos.edit', compact('produto', 'categorias', 'marcas', 'subCategorias', 'categoriaFilhos'));
     }
 
     /**
@@ -111,7 +116,52 @@ class ProdutoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+       //dd($request->all());
+       $request->validate([
+        'capa' => ['nullable', 'image', 'max:3000'],
+        'nome' => ['required', 'max:200'],
+        'categoria_id' => ['required'],
+        'id_marca' => ['required'],
+        'valor' => ['required'],
+        'qtd' => ['required'],
+        'descricao_curta' => ['required', 'max:600'],
+        'descricao_longa' => ['required'],
+        'google_titulo' => ['nullable', 'max:200'],
+        'google_descricao' => ['nullable'],
+        'status' => ['required'],
+       ]);
+
+       $produto = Produto::findOrFail($id);
+
+       $pastaProduto = $this->updateImage($request, 'capa', 'uploads', $produto->capa);
+
+       $produto->capa = empty(!$pastaProduto) ? $pastaProduto : $produto->capa;
+       $produto->nome = $request->nome;
+       $produto->slug = Str::slug($produto->nome);
+       $produto->categoria_id = $request->categoria_id;
+       $produto->sub_categoria_id = $request->sub_categoria_id;
+       $produto->filho_categoria_id = $request->filho_categoria_id;
+       $produto->id_marca = $request->id_marca;
+       $produto->valor = $request->valor;
+       $produto->valor_oferta = $request->valor_oferta;
+       $produto->video = $request->video;
+       $produto->qtd = $request->qtd;
+       $produto->descricao_curta = $request->descricao_curta;
+       $produto->descricao_longa = $request->descricao_longa;
+       $produto->google_titulo = $request->google_titulo;
+       $produto->google_descricao = $request->google_descricao;
+       $produto->status = $request->status;
+       $produto->id_vendedor = Auth::user()->id;
+       $produto->codigo_barras = $request->codigo_barras;
+       $produto->inicio_oferta = $request->inicio_oferta;
+       $produto->fim_oferta = $request->fim_oferta;
+       $produto->tipo_produto = $request->tipo_produto;
+       $produto->aprovado = 1;
+       $produto->save();
+
+       toastr('Produto atualizado com sucesso!', 'success');
+
+       return redirect()->route('produtos.index');
     }
 
     /**
