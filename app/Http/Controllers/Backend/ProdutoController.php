@@ -169,7 +169,13 @@ class ProdutoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $produto = Produto::findOrFail($id);
+
+        $this->deleteImage($produto->capa);
+
+        $produto->delete();
+
+        return response(['status' => 'success', 'message' => 'Excluído com sucesso!']);
     }
 
      //chamada da sub-categoria

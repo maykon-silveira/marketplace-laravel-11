@@ -3,7 +3,6 @@
 namespace App\DataTables;
 
 use App\Models\Produto;
-use App\Models\Slider;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -75,7 +74,8 @@ class ProdutoDataTable extends DataTable
                })
 
             ->addColumn('capa', function($query){
-             return $img = "<img src='". asset($query->capa) ."' style='width: 30%; height:auto;'>";
+              $img = "<img src='". asset($query->capa) ."' style='width: 30%; height:auto;'>";
+             return $img;
             })
             ->rawColumns(['capa', 'editar', 'status', 'tipo_produto'])
             ->setRowId('id');
@@ -141,6 +141,6 @@ class ProdutoDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Produto_' . date('YmdHis');
+        return 'Produtos_' . date('YmdHis');
     }
 }
