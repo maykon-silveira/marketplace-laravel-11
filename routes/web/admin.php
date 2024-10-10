@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\CategoriaController;
 use App\Http\Controllers\Backend\CategoriaFilhoController;
 use App\Http\Controllers\Backend\MarcaController;
 use App\Http\Controllers\Backend\ProdutoController;
+use App\Http\Controllers\Backend\ProdutoGaleriasImgController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoriaController;
@@ -68,7 +69,8 @@ Route::resource('vendedor-perfil', AdminPerfilVendedorController::class)
 Route::get('produtos/get-subcategorias', [ProdutoController::class, 'getSubCategorias'])->name('produtos.get-subCategorias');
 Route::get('produtos/get-categorias-filho', [ProdutoController::class, 'getCategoriasFilho'])->name('produtos.get-filhoCategorias');
 Route::put('marcas/muda-status', [ProdutoController::class, 'mudaStatus'])->name('produtos.muda-status');
-Route::resource('produtos', ProdutoController::class)
+Route::resource('produtos', ProdutoController::class);
+Route::resource('produtos-galerias-img', ProdutoGaleriasImgController::class)
 ->middleware(['auth', 'admin']);
 
 
