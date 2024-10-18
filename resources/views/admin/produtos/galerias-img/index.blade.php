@@ -6,8 +6,13 @@
 <h1>Galerias de Imagens de Produtos</h1>
 <div class="section-header-breadcrumb">
 <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">Painel</a></div>
+<div class="breadcrumb-item active"><a href="{{ route('produtos.index') }}">Produtos</a></div>
 <div class="breadcrumb-item">Galerias</div>
 </div>
+</div>
+
+<div class="mb-3">
+    <a href="{{ route('produtos.index') }}" class="btn btn-primary">Voltar</a>
 </div>
 
 <div class="section-body">
@@ -16,16 +21,17 @@
 <div class="col-12">
 <div class="card">
 <div class="card-header">
-  <h4>Enviar Imagens</h4>
+  <h4>Produto: {{ $produto->nome }}</h4>
 </div>
 
 <div class="card-body">
 
-<form action="{{ route('produtos-galerias-img.store') }}" enctype="multipart/form-data">
-
+<form action="{{ route('produtos-galerias-img.store') }}" method="post" enctype="multipart/form-data">
+@csrf
 <div class="form-group">
 <label for="">Selecione as Imagens <code>(Suporta Várias Imagens)</code> </label>
-<input type="file" name="" id="" multiple class="form-control">
+<input type="file" name="imagem[]" multiple class="form-control">
+<input type="hidden" name="id_produto" value="{{ $produto->id }}">
 </div>
 
 <button type="submit" class="btn btn-primary">Enviar Imagens</button>
